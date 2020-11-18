@@ -28,15 +28,16 @@ defmodule Inky do
 
   def parse(string) do
     string
-    #|> Path.expand()
-    #|> File.read()
-    |> case do
-      {:ok, content} -> content |> Floki.parse_fragment()
-      {:error, _} = error -> error
-    end
+    # |> Path.expand()
+    # |> File.read()
+    # |> case do
+    #  {:ok, content} -> content |> Floki.parse_fragment()
+    #  {:error, _} = error -> error
+    # end
+    # |> elem(1)
+    |> Floki.parse_fragment()
     |> elem(1)
     |> Floki.traverse_and_update(fn x -> Components.parse(x) end)
     |> Floki.raw_html()
-
   end
 end

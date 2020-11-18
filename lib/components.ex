@@ -24,6 +24,7 @@ defmodule Inky.Components do
      ]}
   end
 
+
   # center
   def parse({"center", attributes, content}) do
     {"center", [{"class", "float-center"}, {"align", "center"} | attributes], content}
