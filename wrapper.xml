@@ -1,0 +1,13 @@
+<wrapper class="header">
+  <container>
+    <row class="collapse">
+      <columns small="6">
+      <spacer size="120"></spacer>
+        <img src="http://placehold.it/200x50/663399"/>
+      </columns>
+      <columns small="6">
+        <center><p class="text-right">HERO</p></center>
+      </columns>
+    </row>
+  </container>
+</wrapper>
