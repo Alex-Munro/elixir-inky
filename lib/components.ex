@@ -17,13 +17,12 @@ defmodule Inky.Components do
   def parse({"row", attributes, content}) do
     {"table", [{"class", "row"} | attributes],
      [
-       {"tbody", [],
+       {"tbody", [{"count", "#{Enum.count(content)}"}],
         [
-          {"tr", [], content}
+          {"tr", [], make_columns(content)}
         ]}
      ]}
   end
-
 
   # center
   def parse({"center", attributes, content}) do
@@ -164,6 +163,25 @@ defmodule Inky.Components do
 
   # catchall for other tags
   def parse({tag, attributes, content}) do
+    {tag, attributes, content}
+  end
+
+  defp make_columns(columns) do
+    columns
+    |> Floki.traverse_and_update(fn x -> parse_columns(x) end)
+  end
+
+  defp parse_columns({"columns", attributes, content}) do
+    {"table", [{"class", "columns"} | attributes],
+     [
+       {"tbody", [],
+        [
+          {"tr", [], [{"th", [], content}]}
+        ]}
+     ]}
+  end
+
+  defp parse_columns({tag, attributes, content}) do
     {tag, attributes, content}
   end
 end
