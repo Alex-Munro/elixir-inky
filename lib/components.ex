@@ -17,7 +17,7 @@ defmodule Inky.Components do
   def parse({"row", attributes, content}) do
     {"table", [{"class", "row"} | attributes],
      [
-       {"tbody", [{"count", "#{Enum.count(content)}"}],
+       {"tbody", [],
         [
           {"tr", [], make_columns(content)}
         ]}
@@ -172,11 +172,33 @@ defmodule Inky.Components do
   end
 
   defp parse_columns({"columns", attributes, content}) do
-    {"table", [{"class", "columns"} | attributes],
+    small =
+      if attributes |> List.keymember?("small", 0) do
+        {"small", small} = attributes |> List.keyfind("small", 0)
+        " small-#{small}"
+      end
+
+    large =
+      if attributes |> List.keymember?("large", 0) do
+        {"large", large} = attributes |> List.keyfind("large", 0)
+        " large-#{large}"
+      end
+
+    position =
+      if attributes |> List.keymember?("position", 0) do
+        {"position", position} = attributes |> List.keyfind("position", 0)
+        " #{position}"
+      end
+
+    {"table", [{"class", "columns#{small}#{large}#{position}"}],
      [
        {"tbody", [],
         [
-          {"tr", [], [{"th", [], content}]}
+          {"tr", [],
+           [
+             {"th", [], content},
+             {"th", [{"class", "expander"}], []}
+           ]}
         ]}
      ]}
   end
