@@ -167,9 +167,9 @@ defmodule Inky.Components do
   end
 
   defp make_columns(columns) do
-    columns
-    |> Floki.traverse_and_update(fn x -> parse_columns(x) end)
+    Floki.traverse_and_update(columns, fn x -> parse_columns(x) end)
   end
+
 
   defp parse_columns({"columns", attributes, content}) do
     small =
@@ -189,10 +189,9 @@ defmodule Inky.Components do
         {"position", position} = attributes |> List.keyfind("position", 0)
         " #{position}"
       end
-
-    {"table", [{"class", "columns#{small}#{large}#{position}"}],
+    {"th", [{"class", "columns#{small}#{large}#{position}"}],
      [
-       {"tbody", [],
+       {"table", [],
         [
           {"tr", [],
            [
@@ -200,7 +199,8 @@ defmodule Inky.Components do
              {"th", [{"class", "expander"}], []}
            ]}
         ]}
-     ]}
+     ]
+    }
   end
 
   defp parse_columns({tag, attributes, content}) do
