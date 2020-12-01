@@ -9,37 +9,31 @@ defmodule Inky do
   ## Examples
 
       iex> Inky.hello()
-      :world
-
-
-  {
-    button: 'button',
-    row: 'row',
-    columns: 'columns',
-    container: 'container',
-    inky: 'inky',
-    blockGrid: 'block-grid',
-    menu: 'menu',
-    menuItem: 'item'
-  }
+      :wo
   """
   # parse wrapper elements
   alias Inky.Components
 
   def parse(string) do
     string
-    # |> Path.expand()
-    # |> File.read()
-    # |> case do
-    #  {:ok, content} -> content |> Floki.parse_fragment()
-    #  {:error, _} = error -> error
-    # end
-    # |> elem(1)
+    |> parse_to_html
+  end
+
+  def parse_to_html(string) do
+    string
     |> Floki.parse_fragment()
     |> elem(1)
     |> first_and_last_columns
-    |> swap_inky_to_html
+    |> parse_inky_to_html
     |> Floki.raw_html()
+  end
+
+  def parse_to_map(string) do
+    string
+    |> Floki.parse_fragment()
+    |> elem(1)
+    |> first_and_last_columns
+    |> parse_inky_to_html
   end
 
   defp first_and_last_columns(doc) do
@@ -58,7 +52,7 @@ defmodule Inky do
     end)
   end
 
-  defp swap_inky_to_html(doc) do
+  defp parse_inky_to_html(doc) do
     doc 
     |> Floki.traverse_and_update(fn x -> Components.parse(x) end)
   end

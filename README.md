@@ -1,16 +1,16 @@
-# Inky
+# Inkylixir
 
-**TODO: Add description**
+**Utility for parsing Inky strings into html for responsive emails, or Floki maps for further processing in your app.**
 
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `inky` to your list of dependencies in `mix.exs`:
+by adding `inkylixir` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:inky, "~> 0.1.0"}
+    {:inkylixir, "~> 0.1.5"}
   ]
 end
 ```
